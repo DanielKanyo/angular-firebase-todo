@@ -1,34 +1,16 @@
 :host {
     display: block;
-    margin: 12px 0;
+    margin: 12px auto;
+    width: 960px;
 
-    .item {
-        background-color: #126e3e;
-        height: 56px;
-        border-radius: 10px;
-        font-size: 14px;
+    .card {
         display: flex;
         justify-content: space-between;
         align-items: center;
 
         .item-value {
             color: white;
-            padding-left: 20px;
-        }
-
-        .delete-btn {
-            height: 40px;
-            width: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 10px;
-
-            &:hover {
-                background: #0f7a42;
-                cursor: pointer;
-                border-radius: 10px;
-            }
+            padding-left: 10px;
         }
     }
 }

@@ -1,6 +1,13 @@
-<div class="item" *ngIf="item">
+<mat-card class="card" *ngIf="item">
     <div class="item-value">
         {{ item.value }}
     </div>
-    <div class="delete-btn" (click)="handleDeleteBtnClick(item.id)">x</div>
-</div>
+    <button
+        mat-icon-button
+        class="delete-btn"
+        color="accent"
+        (click)="handleDeleteBtnClick(item.id)"
+    >
+        <mat-icon>delete</mat-icon>
+    </button>
+</mat-card>

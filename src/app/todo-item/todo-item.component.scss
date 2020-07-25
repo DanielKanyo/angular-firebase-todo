@@ -1,7 +1,7 @@
 :host {
     display: block;
     margin: 12px auto;
-    width: 960px;
+    max-width: 960px;
 
     .card {
         display: flex;
@@ -19,6 +19,15 @@
 
         .delete-btn {
             margin-left: 10px;
+        }
+    }
+
+    @media screen and (max-width: 1000px) {
+        margin: 12px;
+        max-width: 960px;
+
+        .card {
+            padding: 10px;
         }
     }
 }

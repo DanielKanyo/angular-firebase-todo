@@ -1,0 +1,6 @@
+<div class="item" *ngIf="item">
+    <div class="item-value">
+        {{ item.value }}
+    </div>
+    <div class="delete-btn" (click)="handleDeleteBtnClick(item.id)">x</div>
+</div>

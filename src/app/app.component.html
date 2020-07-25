@@ -1,0 +1,21 @@
+<div class="app">
+    <div class="content">
+        <div class="input-and-btn-container">
+            <input
+                type="text"
+                placeholder="Add a todo item here..."
+                [value]="inputValue"
+                (keyup)="handleKeyUp($event.target.value)"
+            />
+            <button
+                [disabled]="inputValue.length === 0"
+                (click)="handleAddBtnClick()"
+            >
+                Add
+            </button>
+        </div>
+        <div *ngFor="let todo of todos">
+            <app-todo-item [item]="todo"></app-todo-item>
+        </div>
+    </div>
+</div>

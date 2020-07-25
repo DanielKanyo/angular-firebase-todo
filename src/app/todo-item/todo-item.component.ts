@@ -16,4 +16,8 @@ export class TodoItemComponent {
     handleDeleteBtnClick(todoId: number): void {
         this.todoService.removeTodoItem(todoId);
     }
+
+    handleCheckboxBtnClick(todoId: number, isDone: boolean): void {
+        this.todoService.toggleDoneStateById(todoId, isDone);
+    }
 }

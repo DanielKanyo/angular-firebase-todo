@@ -35,4 +35,11 @@ export class TodoService {
 
         this.setTodos(todos);
     }
+
+    toggleDoneStateById(id: number, isDone: boolean): void {
+        const todo = this.todos.filter((element) => element.id === id)[0];
+
+        todo.isDone = isDone;
+        this.todosSubject.next(this.todos);
+    }
 }

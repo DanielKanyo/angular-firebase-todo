@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
             this.todoService.setTodo({
                 id: this.todos.length,
                 value: this.inputValue,
+                isDone: false
             });
 
             this.inputValue = '';

@@ -1,13 +1,35 @@
 <mat-card class="card" *ngIf="item">
-    <div class="item-value">
+    <div [className]="item.isDone ? 'item-value done' : 'item-value'">
         {{ item.value }}
     </div>
-    <button
-        mat-icon-button
-        class="delete-btn"
-        color="accent"
-        (click)="handleDeleteBtnClick(item.id)"
-    >
-        <mat-icon>delete</mat-icon>
-    </button>
+    <div>
+        <button
+            *ngIf="item.isDone; else elseBlock"
+            mat-icon-button
+            class="check-btn"
+            color="accent"
+            (click)="handleCheckboxBtnClick(item.id, false)"
+        >
+            <mat-icon>check_box</mat-icon>
+        </button>
+        <ng-template #elseBlock>
+            <button
+                mat-icon-button
+                class="check-btn"
+                color="accent"
+                (click)="handleCheckboxBtnClick(item.id, true)"
+            >
+                <mat-icon>check_box_outline_blank</mat-icon>
+            </button>
+        </ng-template>
+
+        <button
+            mat-icon-button
+            class="delete-btn"
+            color="accent"
+            (click)="handleDeleteBtnClick(item.id)"
+        >
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
 </mat-card>

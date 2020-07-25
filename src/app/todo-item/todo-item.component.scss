@@ -12,5 +12,13 @@
             color: white;
             padding-left: 10px;
         }
+
+        .item-value.done {
+            text-decoration: line-through;
+        }
+
+        .delete-btn {
+            margin-left: 10px;
+        }
     }
 }

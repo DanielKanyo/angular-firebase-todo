@@ -3,6 +3,7 @@ import {
     AngularFirestore,
     DocumentChangeAction,
     DocumentReference,
+    AngularFirestoreCollection,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
@@ -25,7 +26,9 @@ export class TodoService {
     }
 
     getTodos(): Observable<DocumentChangeAction<unknown>[]> {
-        return this.firestore.collection('todos').snapshotChanges();
+        return this.firestore
+            .collection('todos', (ref) => ref.orderBy('timestamp'))
+            .snapshotChanges();
     }
 
     addTodoItem(todoItem: TodoItemDTO): Promise<DocumentReference> {
@@ -37,7 +40,7 @@ export class TodoService {
     }
 
     toggleDoneStateById(todoId: number, doneState: boolean): void {
-        const todoItem = this.todos.find(item => item.id === todoId);
+        const todoItem = this.todos.find((item) => item.id === todoId);
         todoItem.isDone = doneState;
 
         this.firestore.doc(`todos/${todoId}`).update(todoItem);

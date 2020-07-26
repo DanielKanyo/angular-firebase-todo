@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
     private getTodos(): void {
         this.todoService.getTodos().subscribe((data) => {
-            const todos = data.map((e) => {
+            this.todos = data.map((e) => {
                 const todoItem = e.payload.doc.data() as TodoItem;
                 const { id } = e.payload.doc;
 
@@ -32,9 +32,6 @@ export class AppComponent implements OnInit {
                 };
             });
 
-            this.todos = todos.sort((a, b) =>
-                a.timestamp > b.timestamp ? 1 : -1
-            );
             this.todoService.todoItems = this.todos;
         });
     }

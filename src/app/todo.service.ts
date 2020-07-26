@@ -1,45 +1,45 @@
 import { Injectable } from '@angular/core';
+import {
+    AngularFirestore,
+    DocumentChangeAction,
+    DocumentReference,
+} from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
-import { TodoItem } from './app.model';
-import { Subject } from 'rxjs';
+import { TodoItemDTO, TodoItem } from './app.model';
 
 @Injectable({
     providedIn: 'root',
 })
 export class TodoService {
     private todos: TodoItem[] = [];
-    todosSubject = new Subject<TodoItem[]>();
 
-    constructor() {}
+    constructor(private readonly firestore: AngularFirestore) {}
 
-    getTodosSubject(): Subject<TodoItem[]> {
-        return this.todosSubject;
+    set todoItems(todoItems: TodoItem[]) {
+        this.todos = todoItems;
     }
 
-    getTodos(): TodoItem[] {
+    get todoItems(): TodoItem[] {
         return this.todos;
     }
 
-    setTodo(todo: TodoItem): void {
-        this.todos.push(todo);
-        this.todosSubject.next(this.todos);
+    getTodos(): Observable<DocumentChangeAction<unknown>[]> {
+        return this.firestore.collection('todos').snapshotChanges();
     }
 
-    setTodos(todos: TodoItem[]): void {
-        this.todos = todos;
-        this.todosSubject.next(this.todos);
+    addTodoItem(todoItem: TodoItemDTO): Promise<DocumentReference> {
+        return this.firestore.collection('todos').add(todoItem);
     }
 
-    removeTodoItem(id: number): void {
-        const todos = this.todos.filter((element) => element.id !== id);
-
-        this.setTodos(todos);
+    removeTodoItemById(todoId: number): void {
+        this.firestore.doc(`todos/${todoId}`).delete();
     }
 
-    toggleDoneStateById(id: number, isDone: boolean): void {
-        const todo = this.todos.filter((element) => element.id === id)[0];
+    toggleDoneStateById(todoId: number, doneState: boolean): void {
+        const todoItem = this.todos.find(item => item.id === todoId);
+        todoItem.isDone = doneState;
 
-        todo.isDone = isDone;
-        this.todosSubject.next(this.todos);
+        this.firestore.doc(`todos/${todoId}`).update(todoItem);
     }
 }

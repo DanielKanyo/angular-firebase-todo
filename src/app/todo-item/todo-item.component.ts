@@ -14,7 +14,7 @@ export class TodoItemComponent {
     constructor(private readonly todoService: TodoService) {}
 
     handleDeleteBtnClick(todoId: number): void {
-        this.todoService.removeTodoItem(todoId);
+        this.todoService.removeTodoItemById(todoId);
     }
 
     handleCheckboxBtnClick(todoId: number, isDone: boolean): void {

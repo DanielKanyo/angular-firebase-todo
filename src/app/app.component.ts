@@ -21,8 +21,21 @@ export class AppComponent implements OnInit {
     }
 
     private getTodos(): void {
-        this.todoService.getTodosSubject().subscribe((todos) => {
-            this.todos = todos;
+        this.todoService.getTodos().subscribe((data) => {
+            const todos = data.map((e) => {
+                const todoItem = e.payload.doc.data() as TodoItem;
+                const { id } = e.payload.doc;
+
+                return {
+                    id,
+                    ...todoItem,
+                };
+            });
+
+            this.todos = todos.sort((a, b) =>
+                a.timestamp > b.timestamp ? 1 : -1
+            );
+            this.todoService.todoItems = this.todos;
         });
     }
 
@@ -32,10 +45,10 @@ export class AppComponent implements OnInit {
 
     handleAddBtnClick(): void {
         if (this.inputValue) {
-            this.todoService.setTodo({
-                id: this.todos.length,
+            this.todoService.addTodoItem({
                 value: this.inputValue,
-                isDone: false
+                isDone: false,
+                timestamp: new Date(),
             });
 
             this.inputValue = '';
